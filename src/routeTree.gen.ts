@@ -9,8 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as KktRouteImport } from './routes/kkt'
+import { Route as IdentifikasiRouteImport } from './routes/identifikasi'
+import { Route as ApdRouteImport } from './routes/apd'
 import { Route as IndexRouteImport } from './routes/index'
 
+const KktRoute = KktRouteImport.update({
+  id: '/kkt',
+  path: '/kkt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdentifikasiRoute = IdentifikasiRouteImport.update({
+  id: '/identifikasi',
+  path: '/identifikasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApdRoute = ApdRouteImport.update({
+  id: '/apd',
+  path: '/apd',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +37,61 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apd': typeof ApdRoute
+  '/identifikasi': typeof IdentifikasiRoute
+  '/kkt': typeof KktRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apd': typeof ApdRoute
+  '/identifikasi': typeof IdentifikasiRoute
+  '/kkt': typeof KktRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apd': typeof ApdRoute
+  '/identifikasi': typeof IdentifikasiRoute
+  '/kkt': typeof KktRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/apd' | '/identifikasi' | '/kkt'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/apd' | '/identifikasi' | '/kkt'
+  id: '__root__' | '/' | '/apd' | '/identifikasi' | '/kkt'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApdRoute: typeof ApdRoute
+  IdentifikasiRoute: typeof IdentifikasiRoute
+  KktRoute: typeof KktRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/kkt': {
+      id: '/kkt'
+      path: '/kkt'
+      fullPath: '/kkt'
+      preLoaderRoute: typeof KktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/identifikasi': {
+      id: '/identifikasi'
+      path: '/identifikasi'
+      fullPath: '/identifikasi'
+      preLoaderRoute: typeof IdentifikasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apd': {
+      id: '/apd'
+      path: '/apd'
+      fullPath: '/apd'
+      preLoaderRoute: typeof ApdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +104,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApdRoute: ApdRoute,
+  IdentifikasiRoute: IdentifikasiRoute,
+  KktRoute: KktRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
