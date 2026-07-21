@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HandMetal, UserCheck, ShieldPlus, ArrowRight, Stethoscope } from "lucide-react";
+import { HandMetal, UserCheck, ShieldPlus, ArrowRight, Stethoscope, LayoutDashboard } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Dashboard,
@@ -100,6 +100,15 @@ function Dashboard() {
             Isi setiap indikator dengan jujur sesuai observasi langsung. Data dikirim ke server pusat setelah tombol <b>Simpan</b> ditekan.
           </p>
         </div>
+
+        <Link
+          to="/admin"
+          className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-border bg-card px-4 py-3.5 text-sm font-semibold text-muted-foreground shadow-soft transition-all hover:bg-secondary hover:text-foreground hover:shadow-lift active:scale-[0.98]"
+        >
+          <LayoutDashboard className="h-4 w-4" />
+          Panel Admin
+          <ArrowRight className="ml-auto h-4 w-4" />
+        </Link>
       </main>
     </div>
   );

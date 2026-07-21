@@ -9,19 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as KktRouteImport } from './routes/kkt'
-import { Route as IdentifikasiRouteImport } from './routes/identifikasi'
-import { Route as ApdRouteImport } from './routes/apd'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ApdRouteImport } from './routes/apd'
+import { Route as IdentifikasiRouteImport } from './routes/identifikasi'
+import { Route as KktRouteImport } from './routes/kkt'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminApdRouteImport } from './routes/admin/apd'
+import { Route as AdminIdentifikasiRouteImport } from './routes/admin/identifikasi'
+import { Route as AdminKktRouteImport } from './routes/admin/kkt'
 
-const KktRoute = KktRouteImport.update({
-  id: '/kkt',
-  path: '/kkt',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IdentifikasiRoute = IdentifikasiRouteImport.update({
-  id: '/identifikasi',
-  path: '/identifikasi',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApdRoute = ApdRouteImport.update({
@@ -29,60 +35,139 @@ const ApdRoute = ApdRouteImport.update({
   path: '/apd',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const IdentifikasiRoute = IdentifikasiRouteImport.update({
+  id: '/identifikasi',
+  path: '/identifikasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KktRoute = KktRouteImport.update({
+  id: '/kkt',
+  path: '/kkt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminApdRoute = AdminApdRouteImport.update({
+  id: '/apd',
+  path: '/apd',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminIdentifikasiRoute = AdminIdentifikasiRouteImport.update({
+  id: '/identifikasi',
+  path: '/identifikasi',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminKktRoute = AdminKktRouteImport.update({
+  id: '/kkt',
+  path: '/kkt',
+  getParentRoute: () => AdminRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/apd': typeof ApdRoute
   '/identifikasi': typeof IdentifikasiRoute
   '/kkt': typeof KktRoute
+  '/login': typeof LoginRoute
+  '/admin/apd': typeof AdminApdRoute
+  '/admin/identifikasi': typeof AdminIdentifikasiRoute
+  '/admin/kkt': typeof AdminKktRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apd': typeof ApdRoute
   '/identifikasi': typeof IdentifikasiRoute
   '/kkt': typeof KktRoute
+  '/login': typeof LoginRoute
+  '/admin/apd': typeof AdminApdRoute
+  '/admin/identifikasi': typeof AdminIdentifikasiRoute
+  '/admin/kkt': typeof AdminKktRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/apd': typeof ApdRoute
   '/identifikasi': typeof IdentifikasiRoute
   '/kkt': typeof KktRoute
+  '/login': typeof LoginRoute
+  '/admin/apd': typeof AdminApdRoute
+  '/admin/identifikasi': typeof AdminIdentifikasiRoute
+  '/admin/kkt': typeof AdminKktRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/apd' | '/identifikasi' | '/kkt'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/apd'
+    | '/identifikasi'
+    | '/kkt'
+    | '/login'
+    | '/admin/apd'
+    | '/admin/identifikasi'
+    | '/admin/kkt'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/apd' | '/identifikasi' | '/kkt'
-  id: '__root__' | '/' | '/apd' | '/identifikasi' | '/kkt'
+  to:
+    | '/'
+    | '/apd'
+    | '/identifikasi'
+    | '/kkt'
+    | '/login'
+    | '/admin/apd'
+    | '/admin/identifikasi'
+    | '/admin/kkt'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/apd'
+    | '/identifikasi'
+    | '/kkt'
+    | '/login'
+    | '/admin/apd'
+    | '/admin/identifikasi'
+    | '/admin/kkt'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ApdRoute: typeof ApdRoute
   IdentifikasiRoute: typeof IdentifikasiRoute
   KktRoute: typeof KktRoute
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/kkt': {
-      id: '/kkt'
-      path: '/kkt'
-      fullPath: '/kkt'
-      preLoaderRoute: typeof KktRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/identifikasi': {
-      id: '/identifikasi'
-      path: '/identifikasi'
-      fullPath: '/identifikasi'
-      preLoaderRoute: typeof IdentifikasiRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apd': {
@@ -92,22 +177,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/identifikasi': {
+      id: '/identifikasi'
+      path: '/identifikasi'
+      fullPath: '/identifikasi'
+      preLoaderRoute: typeof IdentifikasiRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/kkt': {
+      id: '/kkt'
+      path: '/kkt'
+      fullPath: '/kkt'
+      preLoaderRoute: typeof KktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/apd': {
+      id: '/admin/apd'
+      path: '/apd'
+      fullPath: '/admin/apd'
+      preLoaderRoute: typeof AdminApdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/identifikasi': {
+      id: '/admin/identifikasi'
+      path: '/identifikasi'
+      fullPath: '/admin/identifikasi'
+      preLoaderRoute: typeof AdminIdentifikasiRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/kkt': {
+      id: '/admin/kkt'
+      path: '/kkt'
+      fullPath: '/admin/kkt'
+      preLoaderRoute: typeof AdminKktRouteImport
+      parentRoute: typeof AdminRoute
     }
   }
 }
 
+interface AdminRouteChildren {
+  AdminApdRoute: typeof AdminApdRoute
+  AdminIdentifikasiRoute: typeof AdminIdentifikasiRoute
+  AdminKktRoute: typeof AdminKktRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminApdRoute: AdminApdRoute,
+  AdminIdentifikasiRoute: AdminIdentifikasiRoute,
+  AdminKktRoute: AdminKktRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ApdRoute: ApdRoute,
   IdentifikasiRoute: IdentifikasiRoute,
   KktRoute: KktRoute,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
