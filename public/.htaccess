@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Jangan redirect folder api (biarkan dieksekusi oleh PHP)
+  RewriteRule ^api/ - [L]
+
+  # Jika file atau folder fisik ada di server, layani langsung
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Semua route lain diarahkan ke index.html untuk Single Page Application
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Aktifkan kompresi GZIP untuk loading lebih cepat
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>

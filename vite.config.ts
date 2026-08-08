@@ -8,8 +8,10 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
+    prerender: {
+      routes: ["/", "/kkt", "/identifikasi", "/apd", "/login", "/admin", "/admin/kkt", "/admin/identifikasi", "/admin/apd"],
+      crawlLinks: true,
+    },
     server: { entry: "server" },
   },
 });
